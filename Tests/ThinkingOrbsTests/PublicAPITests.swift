@@ -27,6 +27,20 @@ struct PublicAPITests {
         #expect(OrbSize.small.points == 20)
     }
 
+    @Test func designSummariesMatchTheWebLibrary() {
+        #expect(OrbDesign.allCases.map(\.summary) == [
+            "Particles on tilted orbits",
+            "A scan meridian sweeps a dotted globe",
+            "Bands scramble, then click back solved",
+            "A waveform rolls through the rings",
+            "A constellation wires itself",
+            "Three strands plait around the sphere",
+            "An undulating multi-band sash",
+            "A ring slowly morphing",
+            "Circle → triangle → square",
+        ])
+    }
+
     @Test(arguments: OrbDesign.allCases, OrbSize.allCases)
     func publicFrameIsWhatTheViewDraws(design: OrbDesign, size: OrbSize) {
         let resolved = OrbPresets.resolve(design, size)
