@@ -6,6 +6,7 @@
 //  geometry is exactly what the view draws, and the views render.
 //
 
+import Foundation
 import SwiftUI
 import Testing
 @testable import ThinkingOrbs
@@ -25,6 +26,29 @@ struct PublicAPITests {
         #expect(OrbDesign.searching.title == "Searching")
         #expect(OrbSize.regular.points == 64)
         #expect(OrbSize.small.points == 20)
+    }
+
+    /// The public Codable conformance on OrbDesign is exercised: each case
+    /// encodes as its raw string and decodes back to itself.
+    @Test(arguments: OrbDesign.allCases)
+    func designsRoundTripThroughJSON(design: OrbDesign) throws {
+        let data = try JSONEncoder().encode(design)
+        // A String-backed enum encodes as its raw string, not a keyed object.
+        #expect(try JSONDecoder().decode(String.self, from: data) == design.rawValue)
+        #expect(try JSONDecoder().decode(OrbDesign.self, from: data) == design)
+    }
+
+    /// The public Codable conformance on OrbSize is exercised: each case
+    /// encodes as its raw integer and decodes back to itself.
+    @Test func sizesRoundTripThroughJSON() throws {
+        #expect(OrbSize.regular.rawValue == 64)
+        #expect(OrbSize.small.rawValue == 20)
+        for size in OrbSize.allCases {
+            let data = try JSONEncoder().encode(size)
+            // An Int-backed enum encodes as its raw integer, not a keyed object.
+            #expect(String(decoding: data, as: UTF8.self) == "\(size.rawValue)")
+            #expect(try JSONDecoder().decode(OrbSize.self, from: data) == size)
+        }
     }
 
     @Test(arguments: OrbDesign.allCases, OrbSize.allCases)
