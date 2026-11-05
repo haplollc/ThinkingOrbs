@@ -314,6 +314,7 @@ The designs, their tuning and the original engine are [thinking-orbs](https://gi
 ThinkingOrbs is available under the [MIT license](LICENSE), which carries both the original copyright and ours.
 
 Made by [Haplo LLC](https://haploapp.com).
+
 ---
 
 ## More from Haplo
