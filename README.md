@@ -277,11 +277,16 @@ for line in frame.lines {       // draw edges first
 }
 for dot in frame.dots {         // then dots, far to near
     // dot.x, dot.y, dot.r in points, in a 64 × 64 box
+    // dot.z is depth (larger is nearer); its scale depends on the design and is
+    //   always 0 for .shaping, so use it for ordering or relative shading only —
+    //   the dots are already sorted far to near
     // dot.white is ink (0 is darkest, mirror it on dark), dot.a is opacity
 }
 ```
 
 `seconds` is any running time in seconds at normal speed, such as a `TimelineView` date's `timeIntervalSinceReferenceDate`. The design's tuned speed is applied for you.
+
+`dot.z` is depth: larger is nearer. Its scale depends on the design — a unit sphere for some, points for others — and is always 0 for `.shaping`, so use it for ordering or relative shading only. The dots already arrive sorted far to near by `z`.
 
 ## Faithful to the original
 
